@@ -34,6 +34,8 @@ $dep = get_Depart();
     </tr>
     <?php } ?>
     </table>
+    <br><br>
+    <h5><a href="recherche.php">Formulaire de recherche</a></h5>
 </main>
 
 </body>

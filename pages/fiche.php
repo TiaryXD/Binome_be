@@ -16,7 +16,8 @@ $fiche = get_one_empl($employe);
 <main class="container my-5">
     <table class="table table-bordered table-striped align-middle">
     <thead>
-    <tr>        
+    <tr>   
+        <th scope="col" class="table-primary" >Departement</th>  
         <th scope="col" class="table-primary" >Name</th>
         <th scope="col" class="table-primary" >Birth date</th>
         <th scope="col" class="table-primary" >Salary</th>
@@ -29,6 +30,7 @@ $fiche = get_one_empl($employe);
     </thead>
     <?php for ($i=0; $i < count($fiche) ; $i++) {?>
         <tr>
+        <td><?php echo $fiche[$i]['dept_name'] ?></td>
         <td><?php echo $fiche[$i]['first_name']." ".$fiche[$i]['last_name'] ?></a></td>
         <td><?php echo $fiche[$i]['birth_date'] ?></td>
         <td><?php echo $fiche[$i]['salary'] ?></td>
