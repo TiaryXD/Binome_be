@@ -46,5 +46,20 @@ function dbconnect() {
         return $res;
         
     }
+    function get_liste_empl($deptno){
+        $connexion = dbconnect();
+        $sql = "SELECT e.first_name, e.last_name, e.gender, d.dept_name dept_name 
+        FROM dept_emp demp
+        JOIN employees e ON e.emp_no= demp.emp_no
+        JOIN departments d ON d.dept_no=demp.dept_no
+        WHERE d.dept_no ='%s'";
+        $sql = sprintf($sql, $deptno);
+        $result = mysqli_query($connexion, $sql);
+        $res = array();
+        while ($data = mysqli_fetch_assoc($result)) {
+            $res[] = $data;
+        }
+        return $res;
+    }
 
 ?>

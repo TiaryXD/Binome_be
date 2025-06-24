@@ -9,6 +9,8 @@ $dep = get_Depart();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+
     <title>Document</title>
 </head>
 <body>
@@ -25,7 +27,7 @@ $dep = get_Depart();
     <?php for ($i=0; $i < count($dep) ; $i++) { 
         $manager = get_Manager($dep[$i]['dept_no'])?>
         <tr>
-        <td><?php echo $dep[$i]['dept_no'] ?></td>
+        <td><a href="../pages/liste.php?no=<?= $dep[$i]['dept_no']?>"><?php echo $dep[$i]['dept_no'] ?></a></td>
         <td><?php echo $dep[$i]['dept_name'] ?></td>
         <td><?php echo $manager['first_name'] ." ". $manager['last_name']  ?></td>
         </tr>
