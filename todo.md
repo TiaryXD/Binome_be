@@ -59,5 +59,5 @@ Cloner le dépôt
             - [x] join la base salaries, dept_emp, departments, employees
 
         -integration :
-            - [x] utiliser la fonction get_one_temp() pour montrer les infos correspondant a l'employee 
+            - [x] utiliser la fonction get_one_temp() pour montrer les infos correspondant a l'employee
 
