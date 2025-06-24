@@ -23,14 +23,19 @@ $fiche = get_one_empl($employe);
         <th scope="col" class="table-primary" >Date</th>
         <th scope="col" class="table-primary" >From</th>
         <th scope="col" class="table-primary" >To</th>
+        <th scope="col" class="table-primary" >Gender</th>
+
     </tr>
     </thead>
-    <?php for ($i=0; $i < count($dep) ; $i++) { 
-        $manager = get_Manager($dep[$i]['dept_no'])?>
+    <?php for ($i=0; $i < count($fiche) ; $i++) {?>
         <tr>
-        <td><?php echo $dep[$i]['dept_no'] ?></a></td>
-        <td><?php echo $dep[$i]['dept_name'] ?></td>
-        <td><?php echo $manager['first_name'] ." ". $manager['last_name']?></td>
+        <td><?php echo $fiche[$i]['first_name']." ".$fiche[$i]['last_name'] ?></a></td>
+        <td><?php echo $fiche[$i]['birth_date'] ?></td>
+        <td><?php echo $fiche[$i]['salary'] ?></td>
+        <td><?php echo $fiche[$i]['hire_date'] ?></td>
+        <td><?php echo $fiche[$i]['from_date'] ?></td>
+        <td><?php echo $fiche[$i]['to_date'] ?></td>
+        <td><?php echo $fiche[$i]['gender'] ?></td>
         </tr>
     </tr>
     <?php } ?>
