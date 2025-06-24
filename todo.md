@@ -16,6 +16,8 @@ Cloner le dépôt
 
         - base : 
             - [x] utiliser la base : employees
+            - [x] utilisation du tableau : departments
+            - [x] utilisation du tableau : dept_manager
     
     - index.php :
         - affichage :
