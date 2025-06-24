@@ -48,7 +48,7 @@ function dbconnect() {
     }
     function get_liste_empl($deptno){
         $connexion = dbconnect();
-        $sql = "SELECT e.first_name, e.last_name, e.gender, d.dept_name dept_name 
+        $sql = "SELECT e.emp_no, e.first_name, e.last_name, e.gender, d.dept_name dept_name 
         FROM dept_emp demp
         JOIN employees e ON e.emp_no= demp.emp_no
         JOIN departments d ON d.dept_no=demp.dept_no
@@ -68,7 +68,7 @@ function dbconnect() {
 $sql = "SELECT e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date, s.salary, s.from_date, s.to_date, d.dept_name from employees e
 join salaries s on e.emp_no = s.emp_no
 join dept_emp dept on e.emp_no = dept.emp_no
-join departments d on dept.emp_no = d.emp_no
+join departments d on dept.dept_no = d.dept_no
 WHERE e.emp_no=$id";
 $result = mysqli_query(dbconnect(), $sql);
 $publications = mysqli_fetch_all($result, MYSQLI_ASSOC);

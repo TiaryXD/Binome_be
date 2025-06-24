@@ -24,7 +24,7 @@ $liste = get_liste_empl($no);
     </thead>
     <?php for ($i=0; $i < count($liste) ; $i++) {?>
         <tr>
-        <td><a href="../pages/fiche.php?employe=<?=$liste[$i]['first_name']?>"><?php echo $liste[$i]['first_name'] ." ".$liste[$i]['last_name'] ?></a></td>
+        <td><a href="../pages/fiche.php?employe=<?=$liste[$i]['emp_no']?>"><?php echo $liste[$i]['first_name'] ." ".$liste[$i]['last_name'] ?></a></td>
         <td><?php echo $liste[$i]['gender']?></td>
     </tr>
     </tr>
