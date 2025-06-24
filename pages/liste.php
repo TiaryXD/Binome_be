@@ -9,6 +9,7 @@ $liste = get_liste_empl($no);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
@@ -17,12 +18,14 @@ $liste = get_liste_empl($no);
     <thead>
     <tr>        
         <th scope="col" class="table-primary" ><?php echo $liste[0]['dept_name'] ?></th>
+        <th scope="col" class="table-primary" >Gender</th>
+
     </tr>
     </thead>
     <?php for ($i=0; $i < count($liste) ; $i++) {?>
         <tr>
-        <td><?php echo $liste[$i]['first_name'] ." ".$liste[$i]['last_name'] ?></td>
-            
+        <td><a href="../pages/fiche.php?employe=<?=$liste[$i]['first_name']?>"><?php echo $liste[$i]['first_name'] ." ".$liste[$i]['last_name'] ?></a></td>
+        <td><?php echo $liste[$i]['gender']?></td>
     </tr>
     </tr>
     <?php } ?>
