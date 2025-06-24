@@ -79,6 +79,10 @@ function dbconnect() {
         return $res;
 }
 
+function search($mots){
+    $connexion = dbconnect();
+    $sql = "SELECT ";
+}
 
 
 
