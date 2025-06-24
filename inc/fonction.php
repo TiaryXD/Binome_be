@@ -62,4 +62,15 @@ function dbconnect() {
         return $res;
     }
 
+
+    function get_one_empl($id) {
+
+$sql = "SELECT e.birth_date, e.firt_name, e.last_name, e.gender, e.hire_date, s.salary, s.from_date, s.to_date from employees e
+join salaries s on e.emp_no = s.emp_no WHERE e.emp_no=$id";
+$result = mysqli_query(dbconnect(), $sql);
+$publications = mysqli_fetch_all($result, MYSQLI_ASSOC);
+return $publications;
+}
+
+
 ?>
