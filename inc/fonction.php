@@ -16,7 +16,7 @@ function dbconnect() {
     }
 
     function get_Depart() {
-        $sql_pub = "SELECT dept_name FROM departments";
+        $sql_pub = "SELECT dept_no,dept_name FROM departments";
         $connexion = dbconnect();
         $dep = mysqli_query($connexion, $sql_pub);
     
@@ -25,6 +25,7 @@ function dbconnect() {
         if ($dep) {
             while ($departt = mysqli_fetch_assoc($dep)) {
                 $all_dep[] = [
+                'dept_no' => $departt['dept_no'],
                 'dept_name' => $departt['dept_name']
             ];
             }
@@ -33,6 +34,17 @@ function dbconnect() {
         }
     
         return $all_dep;
+    }
+    function get_Manager($deptno){
+        $connexion = dbconnect();
+        $sql = "SELECT e.first_name, e.last_name FROM dept_manager dm
+        JOIN employees e ON dm.emp_no = e.emp_no
+        WHERE dm.dept_no= '%s' AND dm.to_date= '9999-01-01'";
+        $sql = sprintf($sql,$deptno);
+        $result = mysqli_query($connexion, $sql);
+        $res = mysqli_fetch_assoc($result);
+        return $res;
+        
     }
 
 ?>
