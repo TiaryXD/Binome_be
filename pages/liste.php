@@ -22,7 +22,8 @@ $liste = get_liste_empl($no);
     <?php for ($i=0; $i < count($liste) ; $i++) {?>
         <tr>
         <td><?php echo $liste[$i]['first_name'] ." ".$liste[$i]['last_name'] ?></td>
-        </tr>
+            
+    </tr>
     </tr>
     <?php } ?>
     </table>
