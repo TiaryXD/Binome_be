@@ -101,12 +101,6 @@ function dbconnect() {
         return $res;
     }
 
-function search($mots){
-    $connexion = dbconnect();
-    $sql = "SELECT ";
-}
-
-
 ?>
 <!-- SELECT e.first_name, e.last_name, 
        TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, 
