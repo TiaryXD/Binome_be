@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<form action="../pages/result_search.php" method="get">
+<form action="../traitement/traitement_search.php" method="get">
 <div class="container-sm cont">
 <div class="input-group mb-3">
 <span class="input-group-text" id="basic-addon1">Departement</span>
