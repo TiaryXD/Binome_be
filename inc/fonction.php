@@ -65,10 +65,11 @@ function dbconnect() {
 
     function get_one_empl($id) {
         $connexion = dbconnect();
-        $sql = "SELECT e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date, s.salary, s.from_date, s.to_date, d.dept_name from employees e
-        join salaries s on e.emp_no = s.emp_no
-        join dept_emp dept on e.emp_no = dept.emp_no
-        join departments d on dept.dept_no = d.dept_no
+        $sql = "SELECT e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date, s.salary, s.from_date, s.to_date, d.dept_name 
+        FROM employees e
+        JOIN salaries s ON e.emp_no = s.emp_no
+        JOIN dept_emp dept ON e.emp_no = dept.emp_no
+        JOIN departments d ON dept.dept_no = d.dept_no
         WHERE e.emp_no='%s'";
         $sql = sprintf($sql, $id);
         $result = mysqli_query($connexion, $sql);
@@ -77,7 +78,28 @@ function dbconnect() {
             $res[] = $data;
         }
         return $res;
-}
+    }
+
+    function search($dept, $empl, $min, $max, $offset=0){
+        $connexion = dbconnect();
+        $sql = "SELECT e.first_name, e.last_name, e.birth_date, TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, d.dept_name
+        FROM employees AS e
+        JOIN dept_emp AS de ON e.emp_no = de.emp_no
+        JOIN departments AS d ON de.dept_no = d.dept_no
+        WHERE 1=1
+        AND (d.dept_name LIKE '%$dept%')
+        AND (e.first_name LIKE '%$empl%')
+        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) >= $min)
+        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) <= $max)
+        ORDER BY e.first_name
+        LIMIT 20 OFFSET $offset";
+        $result = mysqli_query($connexion, $sql);
+        $res = array();
+        while ($data = mysqli_fetch_assoc($result)) {
+            $res[] = $data;
+        }
+        return $res;
+    }
 
 function search($mots){
     $connexion = dbconnect();
@@ -85,5 +107,36 @@ function search($mots){
 }
 
 
-
 ?>
+<!-- SELECT e.first_name, e.last_name, 
+       TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, 
+       d.dept_name
+FROM employees AS e
+JOIN dept_emp AS de ON e.emp_no = de.emp_no
+JOIN departments AS d ON de.dept_no = d.dept_no
+WHERE 1=1
+  AND (d.dept_name LIKE '%Customer Service%')
+  AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) >= 60)
+  AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) <= 70)
+ORDER BY e.first_name
+LIMIT 20;
+
+SELECT e.first_name, e.last_name, e.birth_date, TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, d.dept_name
+        FROM employees AS e
+        JOIN dept_emp AS de ON e.emp_no = de.emp_no
+        JOIN departments AS d ON de.dept_no = d.dept_no
+        WHERE 1=1
+        AND (d.dept_name LIKE '%Customer Service%')
+        AND (e.first_name LIKE '%Aamer%')
+        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) >= 60)
+        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) <= 70)
+        ORDER BY e.first_name
+        LIMIT 20
+
+SELECT e.first_name, e.last_name, 
+       TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, 
+       d.dept_name
+FROM employees AS e
+JOIN dept_emp AS de ON e.emp_no = de.emp_no
+JOIN departments AS d ON de.dept_no = d.dept_no
+LIMIT 20; -->

@@ -58,6 +58,30 @@ Cloner le dépôt
         - base :
             - [x] join la base salaries, dept_emp, departments, employees
 
-        -integration :
+        - integration :
             - [x] utiliser la fonction get_one_temp() pour montrer les infos correspondant a l'employee
+
+    - recherche.php :
+        - affichage :
+            - [x] formulaire de recherche
+
+        - fonction :
+            - [] 
+
+        - base :
+
+        - integration :
+
+    - result_search.php
+        - affichage :
+            - []
+        - fonction :
+            - []
+        - base :
+            - []
+        - integration :
+            - []
+    
+    [] lien suivant pour afficher les 20 prochaines lignes
+    [] lien précédent pour afficher les 20 lignes précédentes
 
