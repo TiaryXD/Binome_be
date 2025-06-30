@@ -16,8 +16,6 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 0;
 $limit = 20;
 $offset = $page * $limit;
 $result = search($dept, $empl, $min, $max, $offset);
-$debut = $offset+1;
-$fin = $offset+count($result);
 $isa = get_isa_search($dept, $empl, $min, $max);
 
 ?>  
@@ -53,8 +51,7 @@ $isa = get_isa_search($dept, $empl, $min, $max);
 <body>
 
 <main class="container my-5">
-    <h6>Affichage de <?php echo $debut ?> à <?php $fin ?> résultats sur <?php echo $isa ;?></h6>
-
+    <h6>Affichage de <?php echo $offset ?> résultats sur <?php echo $isa ;?></h6>
     <table class="table table-bordered table-striped align-middle">
     <thead>
     <tr>        
@@ -75,11 +72,16 @@ $isa = get_isa_search($dept, $empl, $min, $max);
     </table>
     <div class="d-flex justify-content-between">
         <?php if ($page > 0) { ?>
-            <a class="btn btn-primary" href="result_search.php?dept=<?=$dept?>&empl=<?=$empl?>&min=<?=$min?>&max=<?=$max?>&page=<?=($page-1)?>">← Précédent</a>
-        <?php } else { echo "<div></div>"; } ?>
+            <a class="btn btn-primary" 
+            href="result_search.php?dept=<?=$dept?>&empl=<?=$empl?>&min=<?=$min?>&max=<?=$max?>&page=<?=($page-1)?>">← Précédent</a>
+        <?php } else { ?> 
+    <div>
+    </div> 
+    <?php } ?>
 
         <?php if (count($result) == $limit) { ?>
-            <a class="btn btn-primary" href="result_search.php?dept=<?=$dept?>&empl=<?=$empl?>&min=<?=$min?>&max=<?=$max?>&page=<?=($page+1)?>">Suivant →</a>
+            <a class="btn btn-primary" 
+            href="result_search.php?dept=<?=$dept?>&empl=<?=$empl?>&min=<?=$min?>&max=<?=$max?>&page=<?=($page+1)?>">Suivant →</a>
         <?php } ?>
     </div>
 </main>
