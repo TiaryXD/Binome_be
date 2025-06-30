@@ -82,7 +82,13 @@ function dbconnect() {
 
     function search($dept, $empl, $min, $max, $offset=0){
         $connexion = dbconnect();
-        $sql = "SELECT e.first_name, e.last_name, e.birth_date, TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, d.dept_name
+        if (empty($min)) {
+            $min ='00';
+        }
+        if (empty($max)) {
+            $max ='now()';
+        }
+        $sql = "SELECT e.first_name, e.last_name, e.birth_date, e.emp_no, TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, d.dept_name
         FROM employees AS e
         JOIN dept_emp AS de ON e.emp_no = de.emp_no
         JOIN departments AS d ON de.dept_no = d.dept_no
