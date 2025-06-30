@@ -16,6 +16,9 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 0;
 $limit = 20;
 $offset = $page * $limit;
 $result = search($dept, $empl, $min, $max, $offset);
+$debut = $offset+1;
+$fin = $offset+count($result);
+$isa = get_isa_search($dept, $empl, $min, $max);
 
 ?>  
 <!DOCTYPE html>
@@ -48,11 +51,14 @@ $result = search($dept, $empl, $min, $max, $offset);
 </nav>
 </header>
 <body>
+
 <main class="container my-5">
+    <h6>Affichage de <?php echo $debut ?> à <?php $fin ?> résultats sur <?php echo $isa ;?></h6>
+
     <table class="table table-bordered table-striped align-middle">
     <thead>
     <tr>        
-        <th scope="col" class="table-primary " > </th>
+        <th scope="col" class="table-primary" > </th>
         <th scope="col" class="table-primary" >Employé</th>
         <th scope="col" class="table-primary" >Date de naissance</th>
         <th scope="col" class="table-primary" >Job</th>

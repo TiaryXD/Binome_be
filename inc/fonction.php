@@ -62,7 +62,6 @@ function dbconnect() {
         return $res;
     }
 
-
     function get_one_empl($id) {
         $connexion = dbconnect();
         $sql = "SELECT e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date, s.salary, s.from_date, s.to_date, d.dept_name 
@@ -105,6 +104,31 @@ function dbconnect() {
             $res[] = $data;
         }
         return $res;
+    }
+    function get_isa_search($dept, $empl, $min, $max){
+        $connexion = dbconnect();
+        if (empty($min)) {
+            $min ='00';
+        }
+        if (empty($max)) {
+            $max ='now()';
+        }
+        $sql = "SELECT *
+        FROM employees AS e
+        JOIN dept_emp AS de ON e.emp_no = de.emp_no
+        JOIN departments AS d ON de.dept_no = d.dept_no
+        WHERE 1=1
+        AND (d.dept_name LIKE '%$dept%')
+        AND (e.first_name LIKE '%$empl%')
+        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) >= $min)
+        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) <= $max)";
+        $result = mysqli_query($connexion, $sql);
+        $res = array();
+        while ($data = mysqli_fetch_assoc($result)) {
+            $res[] = $data;
+        }
+        return count($res);
+
     }
 
 ?>
