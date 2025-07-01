@@ -70,7 +70,8 @@ Cloner le dépôt
 
         - base :
 
-        - integration :
+        - integration : 
+            - [x] form action redirection vers traitement_recherche.php
 
     - result_search.php
         - affichage :
