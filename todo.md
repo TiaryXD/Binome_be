@@ -65,9 +65,6 @@ Cloner le dépôt
         - affichage :
             - [x] formulaire de recherche
 
-        - fonction :
-            - [] 
-
         - base :
 
         - integration : 
@@ -75,14 +72,15 @@ Cloner le dépôt
 
     - result_search.php
         - affichage :
-            - []
+            - [x] tableau affichant les resultats des personnes
+            - [x] lien suivant pour afficher les 20 prochaines lignes
+            - [x] lien précédent pour afficher les 20 lignes précédentes 
         - fonction :
-            - []
+            - [x] search();
         - base :
-            - []
+            - [x] join employees,dept_emp, departments 
+            - [x] faire la difference pour calculer l'age et mettre une limite par 
         - integration :
-            - []
-    
-    [] lien suivant pour afficher les 20 prochaines lignes
-    [] lien précédent pour afficher les 20 lignes précédentes
+            - [x] utiliser la fonction search pour montrer les resultats dans les tableaux. Get l'url
+
 
