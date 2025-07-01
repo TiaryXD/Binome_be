@@ -26,6 +26,7 @@ Cloner le dépôt
             - [x] utiliser bootstrap
             - [x] tableau affichant les numeros des departements, les departements et les managers
             - [x] lien sur le code des departements
+            - [x] colonne de nombre des employees
 
         - base :
             - 
@@ -33,6 +34,7 @@ Cloner le dépôt
         - integration :
             - [x] utiliser la fonction get_Depart pour mettre les donnees dans le tableau 
             - [x] utiliser la fonction get_Manager pour mettre les nos des managers a cote
+            - [x] utiliser count sur la fonction get_liste_empl pour afficher le nombre d'employees par departement
 
     - liste.php : 
         - affichage : 

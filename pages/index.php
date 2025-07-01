@@ -2,6 +2,7 @@
 require ("../inc/fonction.php");
 $dep = get_Depart();
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +43,7 @@ $dep = get_Depart();
         <th scope="col" class="table-primary" >No</th>
         <th scope="col" class="table-primary" >Name</th>
         <th scope="col" class="table-primary" >Manager</th>
-
+        <th scope="col" class="table-primary" >Nombre Employees</th>
     </tr>
     </thead>
     <?php for ($i=0; $i < count($dep) ; $i++) { 
@@ -52,6 +53,7 @@ $dep = get_Depart();
         <td><?php echo $dep[$i]['dept_no'] ?></td>
         <td><?php echo $dep[$i]['dept_name'] ?></td>
         <td><?php echo $manager['first_name'] ." ". $manager['last_name']?></td>
+        <td><?php echo count(get_liste_empl($dep[$i]['dept_no'])) ?></td>
         </tr>
     </tr>
     <?php } ?>
