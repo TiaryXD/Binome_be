@@ -12,11 +12,13 @@ if (
     $max = $_GET['max'];
 }
 
-$page = isset($_GET['page']) ? intval($_GET['page']) : 0;
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 20;
 $offset = $page * $limit;
 $result = search($dept, $empl, $min, $max, $offset);
 $isa = get_isa_search($dept, $empl, $min, $max);
+$debut = $offset+1;
+$fin = $offset+count($result);
 
 ?>  
 <!DOCTYPE html>
@@ -41,7 +43,7 @@ $isa = get_isa_search($dept, $empl, $min, $max);
           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="recherche.php">Search</a>
+          <a class="nav-link active" href="recherche.php">Search</a>
         </li>
       </ul>
     </div>
@@ -51,7 +53,7 @@ $isa = get_isa_search($dept, $empl, $min, $max);
 <body>
 
 <main class="container my-5">
-    <h6>Affichage de <?php echo $offset ?> résultats sur <?php echo $isa ;?></h6>
+    <h6>Affichage de <?php echo $debut; ?> à <?php echo $fin; ?> résultats sur <?php echo $isa ;?></h6>
     <table class="table table-bordered table-striped align-middle">
     <thead>
     <tr>        
