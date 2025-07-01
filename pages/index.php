@@ -27,7 +27,7 @@ $dep = get_Depart();
           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="recherche.php">Search</a>
+          <a class="nav-link active" href="recherche.php">Search</a>
         </li>
       </ul>
     </div>
@@ -57,7 +57,6 @@ $dep = get_Depart();
     <?php } ?>
     </table>
     <br><br>
-    <h5><a href="recherche.php">Formulaire de recherche</a></h5>
 </main>
 
 </body>

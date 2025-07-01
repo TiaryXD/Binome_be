@@ -25,7 +25,7 @@ $liste = get_liste_empl($no);
           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="recherche.php">Search</a>
+          <a class="nav-link active" href="recherche.php">Search</a>
         </li>
       </ul>
     </div>

@@ -25,7 +25,7 @@ $fiche = get_one_empl($employe);
           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="recherche.php">Search</a>
+          <a class="nav-link active" href="recherche.php">Search</a>
         </li>
       </ul>
     </div>
@@ -38,26 +38,31 @@ $fiche = get_one_empl($employe);
     <thead>
     <tr>   
         <th scope="col" class="table-primary" >Departement</th>  
-        <th scope="col" class="table-primary" >Name</th>
-        <th scope="col" class="table-primary" >Birth date</th>
         <th scope="col" class="table-primary" >Salary</th>
         <th scope="col" class="table-primary" >Date</th>
         <th scope="col" class="table-primary" >From</th>
         <th scope="col" class="table-primary" >To</th>
-        <th scope="col" class="table-primary" >Gender</th>
-
     </tr>
     </thead>
+    <p>
+    <span class="h6"> Name : </span> 
+    <span><?php echo $fiche[0]['first_name']." ".$fiche[0]['last_name'] ?></span>
+    </p>
+    <p>
+    <span class="h6">Birth-date : </span>
+    <span><?php echo $fiche[0]['birth_date'] ?></span>
+    </p>
+    <p>
+    <span class="h6">Gender : </span>
+    <span><?php echo $fiche[0]['gender'] ?></span>
+    </p>
     <?php for ($i=0; $i < count($fiche) ; $i++) {?>
         <tr>
         <td><?php echo $fiche[$i]['dept_name'] ?></td>
-        <td><?php echo $fiche[$i]['first_name']." ".$fiche[$i]['last_name'] ?></a></td>
-        <td><?php echo $fiche[$i]['birth_date'] ?></td>
         <td><?php echo $fiche[$i]['salary'] ?></td>
         <td><?php echo $fiche[$i]['hire_date'] ?></td>
         <td><?php echo $fiche[$i]['from_date'] ?></td>
         <td><?php echo $fiche[$i]['to_date'] ?></td>
-        <td><?php echo $fiche[$i]['gender'] ?></td>
         </tr>
     </tr>
     <?php } ?>

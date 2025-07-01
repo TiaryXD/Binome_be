@@ -6,3 +6,13 @@ a{
     margin-top: 50px;
 
 }
+.name{
+    text-align: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.birth{
+    text-align: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
