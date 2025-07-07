@@ -62,6 +62,39 @@ function dbconnect() {
         return $res;
     }
 
+        function get_female_empl($deptno){
+        $connexion = dbconnect();
+        $sql = "SELECT e.emp_no, e.first_name, e.last_name, e.gender, d.dept_name dept_name 
+        FROM dept_emp demp
+        JOIN employees e ON e.emp_no= demp.emp_no
+        JOIN departments d ON d.dept_no=demp.dept_no
+        WHERE d.dept_no ='%s' AND e.gender='F'";
+        $sql = sprintf($sql, $deptno);
+        $result = mysqli_query($connexion, $sql);
+        $res = array();
+        while ($data = mysqli_fetch_assoc($result)) {
+            $res[] = $data;
+        }
+        return $res;
+    }
+
+            function get_male_empl($deptno){
+        $connexion = dbconnect();
+        $sql = "SELECT e.emp_no, e.first_name, e.last_name, e.gender, d.dept_name dept_name 
+        FROM dept_emp demp
+        JOIN employees e ON e.emp_no= demp.emp_no
+        JOIN departments d ON d.dept_no=demp.dept_no
+        WHERE d.dept_no ='%s' AND e.gender='M'";
+        $sql = sprintf($sql, $deptno);
+        $result = mysqli_query($connexion, $sql);
+        $res = array();
+        while ($data = mysqli_fetch_assoc($result)) {
+            $res[] = $data;
+        }
+        return $res;
+    }
+    
+
     function get_one_empl($id) {
         $connexion = dbconnect();
         $sql = "SELECT e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date, s.salary, s.from_date, s.to_date, d.dept_name 
@@ -130,6 +163,19 @@ function dbconnect() {
 
     }
 
+    function get_salaire_moyen_dept($dept_no) {
+    $connexion=dbconnect(); 
+    $sql = "SELECT AVG(salary) as salaire_moyen
+            FROM employees e
+            JOIN dept_emp de ON e.emp_no = de.emp_no
+            JOIN salaries s ON e.emp_no = s.emp_no
+            WHERE de.dept_no = '$dept_no' 
+              AND s.to_date = '9999-01-01'";
+
+    $result = mysqli_query($connexion, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['salaire_moyen'];
+}
 ?>
 <!-- SELECT e.first_name, e.last_name, 
        TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, 
