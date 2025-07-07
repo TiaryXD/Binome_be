@@ -176,4 +176,10 @@ function dbconnect() {
     $row = mysqli_fetch_assoc($result);
     return $row['salaire_moyen'];
 }
+
+function change_depart($id){
+    $connexion = dbconnect();
+    
+
+}
 ?>

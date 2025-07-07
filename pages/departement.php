@@ -1,9 +1,17 @@
+<?php 
+require ("../inc/fonction.php");
+$dep = get_Depart();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -27,12 +35,18 @@
 </nav>
 </header>
     <main>
-        <select class="form-select" size="3" aria-label="size 3 select example">
+        <div class="container-sm cont">
+
+<select class="form-select" aria-label="Default select example">
   <option selected>Choisissez votre departement</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
+  <?php for ($i=0; $i < count($dep) ; $i++) { ?>
+  <option value="<?php echo $dep[$i]['dept_no'] ?>"><?php echo $dep[$i]['dept_name'] ?></option>
+    <?php } ?>
 </select>
+
+
+
+</div> 
     </main>
 </body>
 </html>
