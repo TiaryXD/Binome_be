@@ -16,7 +16,7 @@ function dbconnect() {
     }
 
     function get_Depart() {
-        $sql_pub = "SELECT dept_no,dept_name FROM departments";
+        $sql_pub = "SELECT dept_no,dept_name FROM departments ORDER BY dept_no ASC";
         $connexion = dbconnect();
         $dep = mysqli_query($connexion, $sql_pub);
     
@@ -52,7 +52,7 @@ function dbconnect() {
         FROM dept_emp demp
         JOIN employees e ON e.emp_no= demp.emp_no
         JOIN departments d ON d.dept_no=demp.dept_no
-        WHERE d.dept_no ='%s'";
+        WHERE d.dept_no ='%s' ORDER BY e.first_name ASC";
         $sql = sprintf($sql, $deptno);
         $result = mysqli_query($connexion, $sql);
         $res = array();
@@ -112,6 +112,36 @@ function dbconnect() {
         return $res;
     }
 
+    function get_dept_long($id){
+        $connexion = dbconnect();
+        $sql ="SELECT d.dept_name, de.dept_no, e.emp_no, TIMESTAMPDIFF(DAY, de.from_date, de.to_date) AS duree
+               FROM employees e 
+               JOIN dept_emp de ON e.emp_no = de.emp_no 
+               JOIN departments d ON de.dept_no = d.dept_no
+               WHERE e.emp_no = '%s'
+               AND TIMESTAMPDIFF(DAY, de.from_date, de.to_date) = (
+                   SELECT MAX(TIMESTAMPDIFF(DAY, de2.from_date, de2.to_date))
+                   FROM dept_emp de2
+                   WHERE de2.emp_no = '%s'
+               )
+               ORDER BY e.emp_no";
+    
+        $sql = sprintf($sql, $id, $id);
+        $result = mysqli_query($connexion, $sql);
+    
+        if (!$result) {
+            die("Erreur SQL : " . mysqli_error($connexion));
+        }
+    
+        $res = array();
+        while ($data = mysqli_fetch_assoc($result)) {
+            $res[] = $data;
+        }
+    
+        return $res;
+    }
+    
+
     function search($dept, $empl, $min, $max, $offset=0){
         $connexion = dbconnect();
         if (empty($min)) {
@@ -138,6 +168,7 @@ function dbconnect() {
         }
         return $res;
     }
+
     function get_isa_search($dept, $empl, $min, $max){
         $connexion = dbconnect();
         if (empty($min)) {
@@ -159,9 +190,9 @@ function dbconnect() {
         while ($data = mysqli_fetch_assoc($result)) {
             $res[] = $data;
         }
-        return count($res);
-
+        return $res;
     }
+    
 
     function get_salaire_moyen_dept($dept_no) {
     $connexion=dbconnect(); 
@@ -177,35 +208,3 @@ function dbconnect() {
     return $row['salaire_moyen'];
 }
 ?>
-<!-- SELECT e.first_name, e.last_name, 
-       TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, 
-       d.dept_name
-FROM employees AS e
-JOIN dept_emp AS de ON e.emp_no = de.emp_no
-JOIN departments AS d ON de.dept_no = d.dept_no
-WHERE 1=1
-  AND (d.dept_name LIKE '%Customer Service%')
-  AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) >= 60)
-  AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) <= 70)
-ORDER BY e.first_name
-LIMIT 20;
-
-SELECT e.first_name, e.last_name, e.birth_date, TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, d.dept_name
-        FROM employees AS e
-        JOIN dept_emp AS de ON e.emp_no = de.emp_no
-        JOIN departments AS d ON de.dept_no = d.dept_no
-        WHERE 1=1
-        AND (d.dept_name LIKE '%Customer Service%')
-        AND (e.first_name LIKE '%Aamer%')
-        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) >= 60)
-        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) <= 70)
-        ORDER BY e.first_name
-        LIMIT 20
-
-SELECT e.first_name, e.last_name, 
-       TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, 
-       d.dept_name
-FROM employees AS e
-JOIN dept_emp AS de ON e.emp_no = de.emp_no
-JOIN departments AS d ON de.dept_no = d.dept_no
-LIMIT 20; -->
