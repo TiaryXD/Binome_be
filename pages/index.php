@@ -2,7 +2,6 @@
 require ("../inc/fonction.php");
 $dep = get_Depart();
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +35,7 @@ $dep = get_Depart();
 </nav>
 </header>
 <main class="container my-5">
-<p class="h1">Liste des departements et des Manager</p>
+  <p class="h5">Liste des départements </p>
     <table class="table table-bordered table-striped align-middle">
     <thead>
     <tr>        
@@ -44,17 +43,16 @@ $dep = get_Depart();
         <th scope="col" class="table-primary" >No</th>
         <th scope="col" class="table-primary" >Name</th>
         <th scope="col" class="table-primary" >Manager</th>
-        <th scope="col" class="table-primary" >Nombre Employees</th>
+
     </tr>
     </thead>
     <?php for ($i=0; $i < count($dep) ; $i++) { 
         $manager = get_Manager($dep[$i]['dept_no'])?>
         <tr>
-        <td><a href="liste.php?no=<?= $dep[$i]['dept_no']?>">🏢</a></td>
-        <td><a href="details.php?no=<?= $dep[$i]['dept_no']?>"><?php echo $dep[$i]['dept_no'] ?></a></td>
+        <td><a href="../pages/liste.php?no=<?= $dep[$i]['dept_no']?>">🏢</a></td>
+        <td><?php echo $dep[$i]['dept_no'] ?></td>
         <td><?php echo $dep[$i]['dept_name'] ?></td>
         <td><?php echo $manager['first_name'] ." ". $manager['last_name']?></td>
-        <td><?php echo count(get_liste_empl($dep[$i]['dept_no'])) ?></td>
         </tr>
     </tr>
     <?php } ?>

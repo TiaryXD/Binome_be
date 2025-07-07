@@ -61,6 +61,7 @@ $deptlong = get_dept_long($employe);
     <span class="h6">Emploi le plus long : </span>
     <span><?php echo $deptlong[0]['dept_name'] ?></span>
     </p>
+    <p>
     <?php for ($i=0; $i < count($fiche) ; $i++) {?>
         <tr>
         <td><?php echo $fiche[$i]['dept_name'] ?></td>

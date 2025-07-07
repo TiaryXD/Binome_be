@@ -37,7 +37,8 @@ function dbconnect() {
     }
     function get_Manager($deptno){
         $connexion = dbconnect();
-        $sql = "SELECT e.first_name, e.last_name FROM dept_manager dm
+        $sql = "SELECT e.first_name, e.last_name 
+        FROM dept_manager dm
         JOIN employees e ON dm.emp_no = e.emp_no
         WHERE dm.dept_no= '%s' AND dm.to_date= '9999-01-01'";
         $sql = sprintf($sql,$deptno);
@@ -48,11 +49,8 @@ function dbconnect() {
     }
     function get_liste_empl($deptno){
         $connexion = dbconnect();
-        $sql = "SELECT e.emp_no, e.first_name, e.last_name, e.gender, d.dept_name dept_name 
-        FROM dept_emp demp
-        JOIN employees e ON e.emp_no= demp.emp_no
-        JOIN departments d ON d.dept_no=demp.dept_no
-        WHERE d.dept_no ='%s' ORDER BY e.first_name ASC";
+        $sql = "SELECT*FROM v_get_gender AS v
+        WHERE v.dept_no ='%s' ORDER BY v.first_name ASC";
         $sql = sprintf($sql, $deptno);
         $result = mysqli_query($connexion, $sql);
         $res = array();
@@ -64,11 +62,8 @@ function dbconnect() {
 
         function get_female_empl($deptno){
         $connexion = dbconnect();
-        $sql = "SELECT e.emp_no, e.first_name, e.last_name, e.gender, d.dept_name dept_name 
-        FROM dept_emp demp
-        JOIN employees e ON e.emp_no= demp.emp_no
-        JOIN departments d ON d.dept_no=demp.dept_no
-        WHERE d.dept_no ='%s' AND e.gender='F'";
+        $sql = "SELECT*FROM v_get_gender AS v
+        WHERE v.dept_no ='%s' AND v.gender='F'";
         $sql = sprintf($sql, $deptno);
         $result = mysqli_query($connexion, $sql);
         $res = array();
@@ -78,13 +73,10 @@ function dbconnect() {
         return $res;
     }
 
-            function get_male_empl($deptno){
+        function get_male_empl($deptno){
         $connexion = dbconnect();
-        $sql = "SELECT e.emp_no, e.first_name, e.last_name, e.gender, d.dept_name dept_name 
-        FROM dept_emp demp
-        JOIN employees e ON e.emp_no= demp.emp_no
-        JOIN departments d ON d.dept_no=demp.dept_no
-        WHERE d.dept_no ='%s' AND e.gender='M'";
+        $sql = "SELECT*FROM v_get_gender AS v
+        WHERE v.dept_no ='%s' AND v.gender='M'";
         $sql = sprintf($sql, $deptno);
         $result = mysqli_query($connexion, $sql);
         $res = array();
@@ -97,12 +89,8 @@ function dbconnect() {
 
     function get_one_empl($id) {
         $connexion = dbconnect();
-        $sql = "SELECT e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date, s.salary, s.from_date, s.to_date, d.dept_name 
-        FROM employees e
-        JOIN salaries s ON e.emp_no = s.emp_no
-        JOIN dept_emp dept ON e.emp_no = dept.emp_no
-        JOIN departments d ON dept.dept_no = d.dept_no
-        WHERE e.emp_no='%s'";
+        $sql = "SELECT*FROM v_get_one_empl AS v
+        WHERE v.emp_no='%s'";
         $sql = sprintf($sql, $id);
         $result = mysqli_query($connexion, $sql);
         $res = array();
@@ -114,24 +102,8 @@ function dbconnect() {
 
     function get_dept_long($id){
         $connexion = dbconnect();
-        $sql ="SELECT d.dept_name, de.dept_no, e.emp_no, TIMESTAMPDIFF(DAY, de.from_date, de.to_date) AS duree
-               FROM employees e 
-               JOIN dept_emp de ON e.emp_no = de.emp_no 
-               JOIN departments d ON de.dept_no = d.dept_no
-               WHERE e.emp_no = '%s'
-               AND TIMESTAMPDIFF(DAY, de.from_date, de.to_date) = (
-                   SELECT MAX(TIMESTAMPDIFF(DAY, de2.from_date, de2.to_date))
-                   FROM dept_emp de2
-                   WHERE de2.emp_no = '%s'
-               )
-               ORDER BY e.emp_no";
-    
-        $sql = sprintf($sql, $id, $id);
+        $sql ="SELECT*FROM v_emploi_plus_long WHERE emp_no = '$id'";
         $result = mysqli_query($connexion, $sql);
-    
-        if (!$result) {
-            die("Erreur SQL : " . mysqli_error($connexion));
-        }
     
         $res = array();
         while ($data = mysqli_fetch_assoc($result)) {
@@ -150,17 +122,15 @@ function dbconnect() {
         if (empty($max)) {
             $max ='now()';
         }
-        $sql = "SELECT e.first_name, e.last_name, e.birth_date, e.emp_no, TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, d.dept_name
-        FROM employees AS e
-        JOIN dept_emp AS de ON e.emp_no = de.emp_no
-        JOIN departments AS d ON de.dept_no = d.dept_no
+        $sql = "SELECT * FROM v_search AS v
         WHERE 1=1
-        AND (d.dept_name LIKE '%$dept%')
-        AND (e.first_name LIKE '%$empl%')
-        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) >= $min)
-        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) <= $max)
-        ORDER BY e.first_name
+        AND (v.dept_name LIKE '%$dept%')
+        AND (v.first_name LIKE '%$empl%')
+        AND (TIMESTAMPDIFF(YEAR, v.birth_date, CURDATE()) >= $min)
+        AND (TIMESTAMPDIFF(YEAR, v.birth_date, CURDATE()) <= $max)
+        ORDER BY v.first_name
         LIMIT 20 OFFSET $offset";
+
         $result = mysqli_query($connexion, $sql);
         $res = array();
         while ($data = mysqli_fetch_assoc($result)) {
@@ -177,20 +147,19 @@ function dbconnect() {
         if (empty($max)) {
             $max ='now()';
         }
-        $sql = "SELECT * FROM employees AS e
-        JOIN dept_emp AS de ON e.emp_no = de.emp_no
-        JOIN departments AS d ON de.dept_no = d.dept_no
+        
+        $sql = "SELECT*FROM v_empl_dept AS v
         WHERE 1=1
-        AND (d.dept_name LIKE '%$dept%')
-        AND (e.first_name LIKE '%$empl%')
-        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) >= $min)
-        AND (TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) <= $max)";
+        AND (v.dept_name LIKE '%$dept%')
+        AND (v.first_name LIKE '%$empl%')
+        AND (TIMESTAMPDIFF(YEAR, v.birth_date, CURDATE()) >= $min)
+        AND (TIMESTAMPDIFF(YEAR, v.birth_date, CURDATE()) <= $max)";
         $result = mysqli_query($connexion, $sql);
         $res = array();
         while ($data = mysqli_fetch_assoc($result)) {
             $res[] = $data;
         }
-        return $res;
+        return count($res);
     }
     
 

@@ -37,7 +37,11 @@ $liste = get_liste_empl($no);
 <main class="container my-5">
 
   
-      <p class="h1">Liste des employees du departement <?= $liste[0]['dept_name'] ?></p>
+      <p class="h5">Liste des employés </p>
+      <p>  
+      <span class="h6"> Departement : </span>
+      <span> <?= $liste[0]['dept_name'] ?> </span>
+      </p> 
     <table class="table table-bordered table-striped align-middle">
     <thead>
     <tr>        
