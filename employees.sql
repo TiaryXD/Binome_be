@@ -123,5 +123,63 @@ SELECT 'LOADING salaries' as 'INFO';
 source load_salaries1.dump ;
 source load_salaries2.dump ;
 source load_salaries3.dump ;
-
 source show_elapsed.sql ;
+
+-- get_isa_search 
+CREATE  View v_empl_dept AS 
+SELECT e.emp_no, e.birth_date, e.first_name, 
+e.last_name, e.gender, e.hire_date, d.dept_name,
+de.dept_no, de.from_date, de.to_date
+FROM employees e 
+JOIN dept_emp de ON e.emp_no=de.emp_no
+JOIN departments d ON d.dept_no=de.dept_no;
+
+
+-- get_one_empl
+CREATE OR REPLACE VIEW v_get_one_empl AS
+SELECT e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date, 
+       s.salary, s.from_date, s.to_date, d.dept_name
+FROM employees e
+JOIN salaries s ON e.emp_no = s.emp_no
+JOIN dept_emp dept ON e.emp_no = dept.emp_no
+JOIN departments d ON dept.dept_no = d.dept_no;
+
+CREATE OR REPLACE View v_empl_manag AS
+SELECT e.emp_no, e.birth_date, e.first_name, 
+e.last_name, e.gender, e.hire_date, m.dept_no, m.from_date,
+m.to_date, d.dept_name 
+FROM employees e
+JOIN dept_manager m ON e.emp_no=m.emp_no
+JOIN departments d ON m.dept_no=d.dept_no;
+
+
+-- get_female_empl/get_male_empl/get_liste_empl
+CREATE OR REPLACE VIEW v_get_gender AS
+SELECT e.emp_no, e.first_name, e.last_name, e.gender, d.dept_name, d.dept_no
+FROM dept_emp demp
+JOIN employees e ON e.emp_no = demp.emp_no
+JOIN departments d ON d.dept_no = demp.dept_no;
+
+
+-- get_dept_long
+CREATE VIEW v_emploi_plus_long AS
+SELECT d.dept_name, de.dept_no, e.emp_no, 
+       TIMESTAMPDIFF(DAY, de.from_date, de.to_date) AS duree
+FROM employees e 
+JOIN dept_emp de ON e.emp_no = de.emp_no 
+JOIN departments d ON de.dept_no = d.dept_no
+WHERE (de.emp_no, TIMESTAMPDIFF(DAY, de.from_date, de.to_date)) IN (
+    SELECT de2.emp_no, MAX(TIMESTAMPDIFF(DAY, de2.from_date, de2.to_date))
+    FROM dept_emp de2
+    GROUP BY de2.emp_no
+)
+ORDER BY e.emp_no;
+
+-- search
+CREATE VIEW v_search AS
+SELECT e.first_name, e.last_name, e.birth_date, e.emp_no, TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) AS age, d.dept_name
+        FROM employees AS e
+        JOIN dept_emp AS de ON e.emp_no = de.emp_no
+        JOIN departments AS d ON de.dept_no = d.dept_no;
+
+
