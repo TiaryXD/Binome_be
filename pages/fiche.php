@@ -1,7 +1,8 @@
 <?php 
 require ("../inc/fonction.php");
-$employe = $_GET['employe'];
+$employe = intval($_GET['employe']);
 $fiche = get_one_empl($employe);
+$deptlong = get_dept_long($employe);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,6 +56,10 @@ $fiche = get_one_empl($employe);
     <p>
     <span class="h6">Gender : </span>
     <span><?php echo $fiche[0]['gender'] ?></span>
+    </p>
+    <p>
+    <span class="h6">Emploi le plus long : </span>
+    <span><?php echo $deptlong[0]['dept_name'] ?></span>
     </p>
     <?php for ($i=0; $i < count($fiche) ; $i++) {?>
         <tr>
