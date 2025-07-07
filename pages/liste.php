@@ -37,25 +37,25 @@ $liste = get_liste_empl($no);
 <main class="container my-5">
 
   
-      <p class="h5">Liste des employés </p>
-      <p>  
-      <span class="h6"> Departement : </span>
-      <span> <?= $liste[0]['dept_name'] ?> </span>
-      </p> 
+    <p class="h5">Liste des employés </p>
+    <p>  
+    <span class="h6"> Departement : </span>
+    <span> <?= $liste[0]['dept_name'] ?> </span>
+    </p> 
     <table class="table table-bordered table-striped align-middle">
     <thead>
     <tr>        
-        <th scope="col" class="table-primary " > </th>
-        <th scope="col" class="table-primary" >Employees</th>
-        <th scope="col" class="table-primary" >Gender</th>
+      <th scope="col" class="table-primary " > </th>
+      <th scope="col" class="table-primary" >Employees</th>
+      <th scope="col" class="table-primary" >Gender</th>
 
     </tr>
     </thead>
     <?php for ($i=0; $i < count($liste) ; $i++) {?>
-        <tr>
-        <td><a href="../pages/fiche.php?employe=<?=$liste[$i]['emp_no']?>">👤</a></td>
-        <td><?php echo $liste[$i]['first_name'] ." ".$liste[$i]['last_name'] ?></a></td>
-        <td><?php echo $liste[$i]['gender']?></td>
+      <tr>
+      <td><a href="../pages/fiche.php?employe=<?=$liste[$i]['emp_no']?>">👤</a></td>
+      <td><?php echo $liste[$i]['first_name'] ." ".$liste[$i]['last_name'] ?></a></td>
+      <td><?php echo $liste[$i]['gender']?></td>
     </tr>
     </tr>
     <?php } ?>
