@@ -102,8 +102,11 @@ function dbconnect() {
 
     function get_dept_long($id){
         $connexion = dbconnect();
-        $sql ="SELECT*FROM v_emploi_plus_long WHERE emp_no = '$id'";
+        $sql ="SELECT * FROM v_emploi_plus_long ";
         $result = mysqli_query($connexion, $sql);
+        if (!$result) {
+            die("Erreur SQL : " . mysqli_error($connexion));
+        }
     
         $res = array();
         while ($data = mysqli_fetch_assoc($result)) {
@@ -178,20 +181,56 @@ function dbconnect() {
 
     }
 
-    function insert_dept($empno, $option, $debut){
-        $connexion = dbconnect(); 
-        $sql1 = "INSERT INTO dept_emp (emp_no, dept_no, from_date, to_date)
-                 VALUES ('$empno', '$option', '$debut', '9999-01-01')";
-        mysqli_query($connexion, $sql1);
+    function insert_dept($empno, $deptno, $debut){
+        $connexion = dbconnect();
+    
+        // Fermer le département actif
+        $sql_close = "UPDATE dept_emp 
+                      SET to_date = '$debut'
+                      WHERE emp_no = '$empno' AND to_date = '9999-01-01'";
+        mysqli_query($connexion, $sql_close);
+    
+        // Ajouter le nouveau département
+        $sql_insert = "INSERT INTO dept_emp (emp_no, dept_no, from_date, to_date)
+                       VALUES ('$empno', '$deptno', '$debut', '9999-01-01')";
+        mysqli_query($connexion, $sql_insert);
+    
+        // ⚠️ Fermer le salaire actif avant d'insérer le nouveau
+        $sql_close_salary = "UPDATE salaries
+                             SET to_date = '$debut'
+                             WHERE emp_no = '$empno' AND to_date = '9999-01-01'";
+        mysqli_query($connexion, $sql_close_salary);
+    
+        // Insérer le nouveau salaire actif à partir du dernier montant
+        $sql_salary = "INSERT INTO salaries (emp_no, salary, from_date, to_date)
+                       SELECT '$empno', salary, '$debut', '9999-01-01'
+                       FROM salaries
+                       WHERE emp_no = '$empno'
+                       ORDER BY to_date DESC
+                       LIMIT 1";
+        mysqli_query($connexion, $sql_salary);
+    }
+    
+    
+    function get_historique($id){
+        $connexion = dbconnect();
 
-        $sql2 = "INSERT INTO salaries (emp_no, salary, from_date, to_date)
-        SELECT '$empno', salary, '$debut', '9999-01-01'
-        FROM salaries
-        WHERE emp_no = '$empno'
-        ORDER BY to_date DESC
-        LIMIT 1";
-        mysqli_query($connexion, $sql2);
-        
+        $sql = "SELECT d.dept_name, s.salary, s.from_date, s.to_date
+        FROM salaries s
+        JOIN dept_emp de ON s.emp_no=de.emp_no
+        AND s.from_date >= de.from_date
+        AND s.from_date < de.to_date 
+        JOIN departments d ON
+        de.dept_no = d.dept_no
+        WHERE s.emp_no = $id
+        ORDER BY s.from_date ASC";
+
+        $result = mysqli_query($connexion, $sql);
+        $res = array();
+        while ($data = mysqli_fetch_assoc($result)) {
+        $res[] = $data;
+        }
+        return $res;
     }
 
     function become_manager($emp_no, $option, $debut) {
