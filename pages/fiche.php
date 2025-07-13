@@ -2,6 +2,7 @@
 require ("../inc/fonction.php");
 $employe = intval($_GET['employe']);
 $fiche = get_one_empl($employe);
+$historique = get_historique($employe);
 $deptlong = get_dept_long($employe);
 ?>
 <!DOCTYPE html>
@@ -40,7 +41,6 @@ $deptlong = get_dept_long($employe);
     <tr>   
         <th scope="col" class="table-primary" >Departement</th>  
         <th scope="col" class="table-primary" >Salary</th>
-        <th scope="col" class="table-primary" >Date</th>
         <th scope="col" class="table-primary" >From</th>
         <th scope="col" class="table-primary" >To</th>
     </tr>
@@ -58,32 +58,25 @@ $deptlong = get_dept_long($employe);
     <span><?php echo $fiche[0]['gender'] ?></span>
     </p>
     <p>
+    <span class="h6">Hire date : </span>
+    <span><?php echo $fiche[0]['hire_date'] ?></span>
+    </p>
+    <p>
     <span class="h6">Emploi le plus long : </span>
     <span><?php echo $deptlong[0]['dept_name'] ?></span>
     </p>
     <p>
+      
     <a class="btn btn-primary" href="departement.php?employe=<?=$employe?>" role="button">Changer de departement</a>
     </p>
-    <?php 
-    $affiche = array();
-
-    for ($i=0; $i < count($fiche) ; $i++) {
-      $cle = $fiche[$i]['dept_name'].$fiche[$i]['salary'].$fiche[$i]['from_date'].$fiche[$i]['to_date'].$fiche[$i]['salary'];
-      if (!in_array($cle, $affiche)) {
-      ?>
-    
-        <tr>
-        <td><?php echo $fiche[$i]['dept_name'] ?></td>
-        <td><?php echo $fiche[$i]['salary'] ?></td>
-        <td><?php echo $fiche[$i]['hire_date'] ?></td>
-        <td><?php echo $fiche[$i]['from_date'] ?></td>
-        <td><?php echo $fiche[$i]['to_date'] ?></td>
-        </tr>
-    </tr>
-    <?php 
-      } 
-    } 
-    ?>
+    <?php foreach($historique as $ligne) { ?>
+      <tr>
+          <td><?php echo $ligne['dept_name']; ?></td>
+          <td><?php echo $ligne['salary']; ?></td>
+          <td><?php echo $ligne['from_date']; ?></td>
+          <td><?php echo $ligne['to_date']; ?></td>
+      </tr>
+  <?php } ?>
     </table>
 </main>
 </body>
