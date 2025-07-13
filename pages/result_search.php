@@ -54,6 +54,9 @@ $fin = $offset+count($result);
 
 <main class="container my-5">
     <h6>Affichage de <?php echo $debut; ?> à <?php echo $fin; ?> résultats sur <?php echo $isa ;?></h6>
+    <p>
+    <a class="btn btn-danger" href="recherche.php">Retour</a>
+    </p>
     <table class="table table-bordered table-striped align-middle">
     <thead>
     <tr>        

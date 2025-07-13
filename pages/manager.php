@@ -3,7 +3,6 @@ if (!isset($_GET['employe'])) {
   die("Aucun employé sélectionné.");
 }
 $employe = $_GET['employe'];
-$dep = get_Depart();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,14 +38,9 @@ $dep = get_Depart();
 </header>
     <main>
     <div class="container-sm cont">
-      <form action="../traitement/traitement_depart.php" method="get">
+        <p class="h2">Devenir Manager</p>
+      <form action="../traitement/traitement_manager.php" method="get">
         <input type="hidden" name="employe" value="<?php echo $employe;?>">
-        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="option">
-        <option selected>Choisissez un departement</option>
-        <?php for ($i=0; $i < count($dep) ; $i++) { ?>
-        <option value="<?php echo $dep[$i]['dept_no']?>"><?php echo $dep[$i]['dept_name'] ?></option>
-    <?php } ?>
-        </option>
       </p>
       </select>
       <p>

@@ -42,6 +42,9 @@ $liste = get_liste_empl($no);
     <span class="h6"> Departement : </span>
     <span> <?= $liste[0]['dept_name'] ?> </span>
     </p> 
+    <p>
+    <a class="btn btn-danger" href="index.php">Retour</a>
+    </p>
     <table class="table table-bordered table-striped align-middle">
     <thead>
     <tr>        

@@ -193,4 +193,16 @@ function dbconnect() {
         mysqli_query($connexion, $sql2);
         
     }
+
+    function become_manager($emp_no, $option, $debut) {
+        $connexion = dbconnect();
+        $sql1 = "UPDATE dept_manager
+                SET to_date = '$debut'
+                WHERE dept_no = '$option' AND to_date = '9999-01-01'";
+        mysqli_query($connexion,$sql1);
+
+        $sql2 = "INSERT INTO dept_manager(emp_no, dept_no, from_date, to_date)
+                VALUES ('$emp_no', '$option', '$debut', '9999-01-01')";
+        mysqli_query($connexion,$sql2);
+    }
 ?>

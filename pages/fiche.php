@@ -63,6 +63,7 @@ $deptlong = get_dept_long($employe);
     </p>
     <p>
     <a class="btn btn-primary" href="departement.php?employe=<?=$employe?>" role="button">Changer de departement</a>
+    <a class="btn btn-primary" href="manager.php?employe=<?=$employe?>" role="button">Devenir Manager</a>
     </p>
     <?php 
     $affiche = array();
