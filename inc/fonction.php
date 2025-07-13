@@ -175,7 +175,7 @@ function dbconnect() {
     $result = mysqli_query($connexion, $sql);
     $row = mysqli_fetch_assoc($result);
     return $row['salaire_moyen'];
-<<<<<<< HEAD
+
     }
 
     function insert_dept($empno, $option, $debut){
@@ -193,14 +193,4 @@ function dbconnect() {
         mysqli_query($connexion, $sql2);
         
     }
-
-=======
-}
-
-function change_depart($id){
-    $connexion = dbconnect();
-    
-
-}
->>>>>>> 4f556a3d904802b7684ca4db53d0695221bc512c
 ?>
