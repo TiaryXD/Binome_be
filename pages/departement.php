@@ -1,8 +1,17 @@
+<?php require ("../inc/fonction.php");
+if (!isset($_GET['employe'])) {
+  die("Aucun employé sélectionné.");
+}
+$employe = $_GET['employe'];
+$dep = get_Depart();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
@@ -27,12 +36,24 @@
 </nav>
 </header>
     <main>
-        <select class="form-select" size="3" aria-label="size 3 select example">
-  <option selected>Choisissez votre departement</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
+    <div class="container-sm cont">
+      <form action="../traitement/traitement_depart.php" method="get">
+        <input type="hidden" name="employe" value="<?php echo $employe;?>">
+        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="option">
+        <option selected>Choisissez un departement</option>
+        <?php for ($i=0; $i < count($dep) ; $i++) { ?>
+        <option value="<?php echo $dep[$i]['dept_no']?>"><?php echo $dep[$i]['dept_name'] ?></option>
+    <?php } ?>
+        </option>
+      </p>
+      </select>
+      <p>
+      <span class="h6">Date de début : </span>
+      <span><input type="date" name="debut" id=""></span>
+      </p>
+      <input type="submit" value="Valider">
+      </form>
+    </div>
     </main>
 </body>
 </html>

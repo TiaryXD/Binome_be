@@ -62,9 +62,17 @@ $deptlong = get_dept_long($employe);
     <span><?php echo $deptlong[0]['dept_name'] ?></span>
     </p>
     <p>
-    <a class="btn btn-primary" href="departement.php" role="button">Changer de departement</a>
+      
+    <a class="btn btn-primary" href="departement.php?employe=<?=$employe?>" role="button">Changer de departement</a>
     </p>
-    <?php for ($i=0; $i < count($fiche) ; $i++) {?>
+    <?php 
+    $affiche = array();
+
+    for ($i=0; $i < count($fiche) ; $i++) {
+      $cle = $fiche[$i]['dept_name'].$fiche[$i]['salary'].$fiche[$i]['from_date'].$fiche[$i]['to_date'].$fiche[$i]['salary'];
+      if (!in_array($cle, $affiche)) {
+      ?>
+    
         <tr>
         <td><?php echo $fiche[$i]['dept_name'] ?></td>
         <td><?php echo $fiche[$i]['salary'] ?></td>
@@ -73,7 +81,10 @@ $deptlong = get_dept_long($employe);
         <td><?php echo $fiche[$i]['to_date'] ?></td>
         </tr>
     </tr>
-    <?php } ?>
+    <?php 
+      } 
+    } 
+    ?>
     </table>
 </main>
 </body>

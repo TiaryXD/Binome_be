@@ -144,6 +144,8 @@ JOIN salaries s ON e.emp_no = s.emp_no
 JOIN dept_emp dept ON e.emp_no = dept.emp_no
 JOIN departments d ON dept.dept_no = d.dept_no;
 
+
+
 CREATE OR REPLACE View v_empl_manag AS
 SELECT e.emp_no, e.birth_date, e.first_name, 
 e.last_name, e.gender, e.hire_date, m.dept_no, m.from_date,

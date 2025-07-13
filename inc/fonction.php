@@ -164,7 +164,7 @@ function dbconnect() {
     
 
     function get_salaire_moyen_dept($dept_no) {
-    $connexion=dbconnect(); 
+    $connexion = dbconnect(); 
     $sql = "SELECT AVG(salary) as salaire_moyen
             FROM employees e
             JOIN dept_emp de ON e.emp_no = de.emp_no
@@ -175,5 +175,22 @@ function dbconnect() {
     $result = mysqli_query($connexion, $sql);
     $row = mysqli_fetch_assoc($result);
     return $row['salaire_moyen'];
-}
+    }
+
+    function insert_dept($empno, $option, $debut){
+        $connexion = dbconnect(); 
+        $sql1 = "INSERT INTO dept_emp (emp_no, dept_no, from_date, to_date)
+                 VALUES ('$empno', '$option', '$debut', '9999-01-01')";
+        mysqli_query($connexion, $sql1);
+
+        $sql2 = "INSERT INTO salaries (emp_no, salary, from_date, to_date)
+        SELECT '$empno', salary, '$debut', '9999-01-01'
+        FROM salaries
+        WHERE emp_no = '$empno'
+        ORDER BY to_date DESC
+        LIMIT 1";
+        mysqli_query($connexion, $sql2);
+        
+    }
+
 ?>
