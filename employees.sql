@@ -137,13 +137,7 @@ JOIN departments d ON d.dept_no=de.dept_no;
 
 -- get_one_empl
 CREATE OR REPLACE VIEW v_get_one_empl AS
-SELECT e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date, 
-       s.salary, s.from_date, s.to_date, d.dept_name
-FROM employees e
-JOIN salaries s ON e.emp_no = s.emp_no
-JOIN dept_emp dept ON e.emp_no = dept.emp_no
-JOIN departments d ON dept.dept_no = d.dept_no;
-
+SELECT * FROM employees ;
 
 
 CREATE OR REPLACE View v_empl_manag AS
